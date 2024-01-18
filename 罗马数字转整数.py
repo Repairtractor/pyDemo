@@ -3,26 +3,21 @@
 # 就是看两位被，后一个比前一个大，说明就是后一个减前一个，然后加上值，相同就直接加
 class Solution:
     def romanToInt(self, s: str) -> int:
-        curr=res=0
-        next=1
+        curr = res = 0
         # 遍历curr，只需要判断下一个数据是否大于当前的数，如果大于就减，小于就加
-        while curr<len(s):
-            
+        while curr < len(s):
+            curr_num = self.mapping(s[curr])
+            if curr + 1 < len(s) and curr_num < self.mapping(s[curr + 1]):
+                curr_num=-curr_num
+            res+=curr_num
+            curr+=1
 
+        return res
 
-        
-
-
-
-        return 0
+    def mapping(self, s: str) -> int:
+        return {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}.get(
+            s, "default"
+        )
     
-    def mapping(self,s:str)->int:
-        return {
-            'I':1,
-            'V':5,
-            'X':10,
-            'L':50,
-            'C':100,
-            'D':500,
-            'M':1000
-        }.get(s,'default')
+cc =Solution().romanToInt('MCMXCIV')
+print(cc)
